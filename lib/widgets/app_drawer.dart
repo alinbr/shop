@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/auth.dart';
@@ -11,7 +12,7 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Hello'),
+            title: Text('Menu'),
             automaticallyImplyLeading: false,
           ),
           Divider(),
@@ -42,14 +43,17 @@ class AppDrawer extends StatelessWidget {
           ),
           Spacer(),
           ListTile(
-            leading: Icon(Icons.exit_to_app),
+            leading: Icon(CupertinoIcons.arrow_left_circle_fill),
             title: Text('Sign out'),
             onTap: () {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed('/');
               Provider.of<Auth>(context, listen: false).signOut();
             },
-          )
+          ),
+          SizedBox(
+            height: 24,
+          ),
         ],
       ),
     );

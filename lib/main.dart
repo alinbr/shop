@@ -47,10 +47,13 @@ class MyApp extends StatelessWidget {
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primarySwatch: Colors.green,
-              accentColor: Colors.deepOrange,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
+                primarySwatch: Colors.green,
+                accentColor: Colors.deepOrange,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+                appBarTheme: AppBarTheme(
+                  backgroundColor: Colors.black87,
+                  centerTitle: true,
+                )),
             home: auth.isAuth
                 ? ProductOverviewScreen()
                 : FutureBuilder(

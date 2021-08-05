@@ -1,14 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/products.dart';
 
 class ProductDetailScren extends StatelessWidget {
-  // final String title;
-  // final double price;
-
-  // const ProductDetailScren(this.title, this.price);
-
   static const routeName = '/product-detail';
 
   @override
@@ -18,9 +14,6 @@ class ProductDetailScren extends StatelessWidget {
         Provider.of<Products>(context, listen: false).findById(productId);
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(product.title),
-      // ),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -62,7 +55,7 @@ class ProductDetailScren extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 1000,
+                height: 100,
               )
             ]),
           )

@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/cart.dart';
-import 'package:shop/providers/product.dart';
 import 'package:shop/providers/products.dart';
 import 'package:shop/screens/cart_screen.dart';
 import 'package:shop/widgets/app_drawer.dart';
@@ -57,10 +57,9 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         title: Text('My Shop'),
         actions: <Widget>[
           PopupMenuButton(
-            icon: Icon(Icons.more_vert),
             itemBuilder: (_) => [
               PopupMenuItem(
-                child: Text('Only fav'),
+                child: Text('Only favorite'),
                 value: FilterOptions.Favorites,
               ),
               PopupMenuItem(
@@ -84,7 +83,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               value: cartData.itemCount.toString(),
             ),
             child: IconButton(
-              icon: Icon(Icons.shopping_basket),
+              icon: Icon(CupertinoIcons.shopping_cart),
               onPressed: () {
                 Navigator.of(context).pushNamed(CartScreen.routeName);
               },
