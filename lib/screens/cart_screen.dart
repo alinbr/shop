@@ -13,12 +13,19 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Cart'),
+        title: Text(
+          'Your Cart',
+          style: TextStyle(color: Colors.black87),
+        ),
       ),
       body: Column(
         children: <Widget>[
           Card(
-            margin: EdgeInsets.all(15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            elevation: 2,
+            margin: EdgeInsets.all(16),
             child: Padding(
               padding: EdgeInsets.all(8),
               child: Row(
@@ -26,39 +33,38 @@ class CartScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Total',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 18),
                   ),
                   Spacer(),
                   Chip(
-                    label: Text(
-                      '\$${cartData.totalAmount}',
-                      style: TextStyle(
-                          color: Theme.of(context)
-                              .primaryTextTheme
-                              .headline6
-                              .color),
-                    ),
-                    backgroundColor: Theme.of(context).primaryColor,
-                  ),
+                      label: Text(
+                        '\$${cartData.totalAmount}',
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .primaryTextTheme
+                                .headline6
+                                .color),
+                      ),
+                      backgroundColor: Colors.black87),
                   OrderNowButton(cartData: cartData)
                 ],
               ),
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 8,
           ),
           Expanded(
               child: ListView.builder(
             itemCount: cartData.itemCount,
             itemBuilder: (ctx, index) {
               return CartItem(
-                cartData.items.values.toList()[index].id,
-                cartData.items.values.toList()[index].price,
-                cartData.items.values.toList()[index].quantity,
-                cartData.items.values.toList()[index].title,
-                cartData.items.keys.toList()[index],
-              );
+                  cartData.items.values.toList()[index].id,
+                  cartData.items.values.toList()[index].price,
+                  cartData.items.values.toList()[index].quantity,
+                  cartData.items.values.toList()[index].title,
+                  cartData.items.keys.toList()[index],
+                  cartData.items.values.toList()[index].imageUrl);
             },
           ))
         ],
@@ -84,7 +90,7 @@ class _OrderNowButtonState extends State<OrderNowButton> {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       child: _isLoading
           ? CircularProgressIndicator()
           : Text(
@@ -104,7 +110,6 @@ class _OrderNowButtonState extends State<OrderNowButton> {
                 _isLoading = false;
               });
             },
-      textColor: Theme.of(context).primaryColor,
     );
   }
 }

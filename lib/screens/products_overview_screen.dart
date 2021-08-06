@@ -19,8 +19,6 @@ class ProductOverviewScreen extends StatefulWidget {
 }
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
-  bool _showOnlyFav = false;
-
   bool _isLoading = false;
 
   @override
@@ -54,29 +52,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Shop'),
+        title: Text(
+          'My Shop',
+          style: TextStyle(color: Colors.black87),
+        ),
         actions: <Widget>[
-          PopupMenuButton(
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                child: Text('Only favorite'),
-                value: FilterOptions.Favorites,
-              ),
-              PopupMenuItem(
-                child: Text('Show all'),
-                value: FilterOptions.All,
-              )
-            ],
-            onSelected: (FilterOptions selectedValue) {
-              setState(() {
-                if (selectedValue == FilterOptions.Favorites) {
-                  _showOnlyFav = true;
-                } else {
-                  _showOnlyFav = false;
-                }
-              });
-            },
-          ),
           Consumer<Cart>(
             builder: (_, cartData, ch) => Badge(
               child: ch,
@@ -96,7 +76,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : ProductsGrid(_showOnlyFav),
+          : ProductsGrid(),
     );
   }
 }

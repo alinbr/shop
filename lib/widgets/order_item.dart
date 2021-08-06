@@ -20,6 +20,9 @@ class _OrderItemState extends State<OrderItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
       margin: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[

@@ -8,8 +8,10 @@ class CartItem extends StatelessWidget {
   final double price;
   final int quantiy;
   final String title;
+  final String imageUrl;
 
-  CartItem(this.id, this.price, this.quantiy, this.title, this.productId);
+  CartItem(this.id, this.price, this.quantiy, this.title, this.productId,
+      this.imageUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +53,51 @@ class CartItem extends StatelessWidget {
           size: 40,
         ),
       ),
-      child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: ListTile(
-            leading: CircleAvatar(
-                child: FittedBox(
-                    child: Padding(
-                        padding: EdgeInsets.all(5), child: Text('\$$price')))),
-            title: Text(title),
-            subtitle: Text('Total: \$${price * quantiy}'),
-            trailing: Text('$quantiy x'),
-          ),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Container(
+              height: 96,
+              width: 96,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                image: DecorationImage(
+                    image: NetworkImage(imageUrl), fit: BoxFit.cover),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: 96,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18),
+                      ),
+                    ),
+                    Text(
+                      'total: \$${price * quantiy}',
+                      textAlign: TextAlign.left,
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                    ),
+                    Text(
+                      'quantity: $quantiy',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

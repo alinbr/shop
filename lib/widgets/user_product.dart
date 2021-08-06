@@ -18,6 +18,7 @@ class UserProduct extends StatelessWidget {
     return ListTile(
       title: Text(title),
       leading: CircleAvatar(
+        radius: 32,
         backgroundImage: NetworkImage(imageUrl),
       ),
       trailing: Container(

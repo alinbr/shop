@@ -12,7 +12,10 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Menu'),
+            title: Text(
+              'Menu',
+              style: TextStyle(color: Colors.black87),
+            ),
             automaticallyImplyLeading: false,
           ),
           Divider(),

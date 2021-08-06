@@ -51,7 +51,8 @@ class Orders with ChangeNotifier {
                   id: item['id'],
                   price: item['price'],
                   quantity: item['quantity'],
-                  title: item['title']))
+                  title: item['title'],
+                  imageUrl: item['imageUrl']))
               .toList()));
       _orders = loadedOrders.reversed.toList();
       notifyListeners();
@@ -71,7 +72,8 @@ class Orders with ChangeNotifier {
               'id': e.id,
               'title': e.title,
               'quantity': e.quantity,
-              'price': e.price
+              'price': e.price,
+              'imageUrl': e.imageUrl
             };
           }).toList()
         }));

@@ -16,60 +16,109 @@ class ProductItem extends StatelessWidget {
 
     final authData = Provider.of<Auth>(context, listen: false);
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: GridTile(
-        child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(ProductDetailScren.routeName,
-                  arguments: product.id);
-            },
-            child: Hero(
-              tag: product.id,
-              child: FadeInImage(
-                placeholder:
-                    AssetImage('assets/images/product-placeholder.png'),
-                image: NetworkImage(product.imageUrl),
-                fit: BoxFit.cover,
-              ),
-            )),
-        footer: GridTileBar(
-          backgroundColor: Colors.black,
-          leading: IconButton(
-            icon: Consumer<Product>(
-              builder: (ctx, product, _) => Icon(
-                product.isFavorite ? Icons.favorite : Icons.favorite_border,
-              ),
+    return Container(
+      child: Column(
+        children: [
+          Expanded(
+            child: Stack(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                        ProductDetailScren.routeName,
+                        arguments: product.id);
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: Container(
+                      height: double.infinity,
+                      child: Hero(
+                        tag: product.id,
+                        child: FadeInImage(
+                          placeholder: AssetImage(
+                              'assets/images/product-placeholder.png'),
+                          image: product.imageUrl != ""
+                              ? NetworkImage(product.imageUrl)
+                              : AssetImage(
+                                  'assets/images/product-placeholder.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      color: Colors.white,
+                    ),
+                    child: IconButton(
+                      icon: Consumer<Product>(
+                        builder: (ctx, product, _) => Icon(
+                          product.isFavorite
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                        ),
+                      ),
+                      onPressed: () {
+                        product.toogleFavoriteStatus(
+                            authData.token, authData.userId);
+                      },
+                      color: !product.isFavorite
+                          ? Colors.black87
+                          : Theme.of(context).accentColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            onPressed: () {
-              product.toogleFavoriteStatus(authData.token, authData.userId);
-            },
-            color: Theme.of(context).accentColor,
           ),
-          title: Text(
-            product.title,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold),
+          SizedBox(
+            height: 8,
           ),
-          trailing: IconButton(
-            icon: Icon(CupertinoIcons.add_circled_solid),
-            onPressed: () {
-              cart.addItem(product.id, product.price, product.title);
+          Container(
+            width: double.infinity,
+            child: Text(
+              product.title,
+              textAlign: TextAlign.left,
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+            ),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Row(
+            children: [
+              Text(
+                "\$${product.price.toString()}",
+                textAlign: TextAlign.left,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              ),
+              IconButton(
+                icon: Icon(CupertinoIcons.cart),
+                onPressed: () {
+                  cart.addItem(product.id, product.price, product.title,
+                      product.imageUrl);
 
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text('Added item to cart!'),
-                duration: Duration(milliseconds: 1200),
-                action: SnackBarAction(
-                    label: "UNDO",
-                    onPressed: () {
-                      cart.removeSingleItem(product.id);
-                    }),
-              ));
-            },
-            color: Theme.of(context).accentColor,
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('Added item to cart!'),
+                    duration: Duration(milliseconds: 1200),
+                    action: SnackBarAction(
+                        label: "UNDO",
+                        onPressed: () {
+                          cart.removeSingleItem(product.id);
+                        }),
+                  ));
+                },
+                color: Theme.of(context).accentColor,
+              ),
+            ],
           ),
-        ),
+        ],
       ),
     );
   }

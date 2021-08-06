@@ -5,8 +5,9 @@ class CartItem {
   final String title;
   final int quantity;
   final double price;
+  final String imageUrl;
 
-  CartItem({this.id, this.title, this.quantity, this.price});
+  CartItem({this.id, this.title, this.quantity, this.price, this.imageUrl});
 }
 
 class Cart with ChangeNotifier {
@@ -28,15 +29,17 @@ class Cart with ChangeNotifier {
     return total;
   }
 
-  void addItem(String productId, double price, String title) {
+  void addItem(String productId, double price, String title, String imageUrl) {
     if (_items.containsKey(productId)) {
       _items.update(
-          productId,
-          (existing) => CartItem(
-              id: existing.id,
-              title: existing.title,
-              price: existing.price,
-              quantity: existing.quantity + 1));
+        productId,
+        (existing) => CartItem(
+            id: existing.id,
+            title: existing.title,
+            price: existing.price,
+            quantity: existing.quantity + 1,
+            imageUrl: existing.imageUrl),
+      );
     } else {
       _items.putIfAbsent(
           productId,
@@ -44,7 +47,8 @@ class Cart with ChangeNotifier {
               id: DateTime.now().toString(),
               title: title,
               price: price,
-              quantity: 1));
+              quantity: 1,
+              imageUrl: imageUrl));
     }
 
     notifyListeners();
@@ -66,12 +70,14 @@ class Cart with ChangeNotifier {
     }
     if (_items[id].quantity > 1) {
       _items.update(
-          id,
-          (existing) => CartItem(
-              id: existing.id,
-              title: existing.title,
-              price: existing.price,
-              quantity: existing.quantity - 1));
+        id,
+        (existing) => CartItem(
+            id: existing.id,
+            title: existing.title,
+            price: existing.price,
+            quantity: existing.quantity - 1,
+            imageUrl: existing.imageUrl),
+      );
     } else {
       _items.remove(id);
     }
