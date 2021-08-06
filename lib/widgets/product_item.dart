@@ -36,6 +36,8 @@ class ProductItem extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(24),
                     child: Container(
                       height: double.infinity,
+                      width: double.infinity,
+                      color: Colors.blueGrey,
                       child: Hero(
                         tag: product.id,
                         child: FadeInImage(
