@@ -7,8 +7,10 @@ as well as switching from Provider to Riverpod.
 
 
 Old app:
+
 https://user-images.githubusercontent.com/583386/128556776-0e3d35dd-a712-4bb7-ad8d-5013bfe1702d.mov
 
 Updated app:
+
 https://user-images.githubusercontent.com/583386/128556824-bd0cc5c8-0af5-4e4a-a4e7-c0d28d0a761b.mov
 
