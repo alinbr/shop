@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/models/http_exception.dart';
-import 'package:shop/providers_riverpod/auth_controller.dart';
+import 'package:shop/providers/auth_controller.dart';
 import 'package:shop/widgets/auth/confirm_password.dart';
 import 'package:shop/widgets/auth/email_field.dart';
 import 'package:shop/widgets/auth/login_register_button.dart';

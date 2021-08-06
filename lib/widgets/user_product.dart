@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/products_controller.dart';
+import 'package:shop/providers/products_controller.dart';
 import 'package:shop/screens/edit_product_screen.dart';
 
 class UserProduct extends ConsumerWidget {

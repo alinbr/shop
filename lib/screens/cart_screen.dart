@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/cart_controller.dart' hide CartItem;
-import 'package:shop/providers_riverpod/orders_controller.dart';
+import 'package:shop/providers/cart_controller.dart' hide CartItem;
+import 'package:shop/providers/orders_controller.dart';
 import '../widgets/cart_item.dart' show CartItem;
 
 class CartScreen extends ConsumerWidget {
@@ -38,7 +38,7 @@ class CartScreen extends ConsumerWidget {
                   Spacer(),
                   Chip(
                       label: Text(
-                        '\$${cartData.totalAmount}',
+                        '\$${cartData.totalAmount.toStringAsFixed(2)}',
                         style: TextStyle(
                             color: Theme.of(context)
                                 .primaryTextTheme

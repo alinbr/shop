@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/product_controller.dart';
-import 'package:shop/providers_riverpod/products_controller.dart';
+import 'package:shop/providers/product_controller.dart';
+import 'package:shop/providers/products_controller.dart';
 
 class EditProductScreen extends ConsumerStatefulWidget {
   static const routeName = '/edit-product';

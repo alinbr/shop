@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/products_controller.dart';
+import 'package:shop/providers/products_controller.dart';
 
 class ProductDetailScren extends ConsumerWidget {
   static const routeName = '/product-detail';
@@ -25,7 +25,7 @@ class ProductDetailScren extends ConsumerWidget {
                   placeholder:
                       AssetImage('assets/images/product-placeholder.png'),
                   image: NetworkImage(product.imageUrl),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),

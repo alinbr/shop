@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:shop/providers_riverpod/products_controller.dart';
+import 'package:shop/providers/products_controller.dart';
 
 import './product_item.dart';
 

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop/models/http_exception.dart';
-import 'package:shop/providers_riverpod/auth_controller.dart';
-import 'package:shop/providers_riverpod/product_controller.dart';
+import 'package:shop/providers/auth_controller.dart';
+import 'package:shop/providers/product_controller.dart';
 
 final productsProvider = ChangeNotifierProvider((ref) {
   return ProductsController(

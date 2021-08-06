@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/auth_controller.dart';
-import 'package:shop/providers_riverpod/cart_controller.dart';
-import 'package:shop/providers_riverpod/product_controller.dart';
+import 'package:shop/providers/auth_controller.dart';
+import 'package:shop/providers/cart_controller.dart';
+import 'package:shop/providers/product_controller.dart';
 
 import '../screens/product_detail_screen.dart';
 
