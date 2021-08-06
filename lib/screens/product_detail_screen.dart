@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/productsController.dart';
+import 'package:shop/providers_riverpod/products_controller.dart';
 
 class ProductDetailScren extends ConsumerWidget {
   static const routeName = '/product-detail';

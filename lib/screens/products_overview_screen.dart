@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/cartController.dart';
-import 'package:shop/providers_riverpod/productsController.dart';
+import 'package:shop/providers_riverpod/cart_controller.dart';
+import 'package:shop/providers_riverpod/products_controller.dart';
 import 'package:shop/screens/cart_screen.dart';
 import 'package:shop/widgets/app_drawer.dart';
 import 'package:shop/widgets/badge.dart';

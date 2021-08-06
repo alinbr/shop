@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/ordersController.dart' hide OrderItem;
+import 'package:shop/providers_riverpod/orders_controller.dart' hide OrderItem;
 import 'package:shop/widgets/order_item.dart';
 import '../widgets/app_drawer.dart';
 

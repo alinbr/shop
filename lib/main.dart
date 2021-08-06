@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          fontFamily: 'Motserrat',
           primarySwatch: Colors.green,
           accentColor: Colors.deepOrange,
           visualDensity: VisualDensity.adaptivePlatformDensity,

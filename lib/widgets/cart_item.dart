@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/cartController.dart';
+import 'package:shop/providers_riverpod/cart_controller.dart';
 
 class CartItem extends ConsumerWidget {
   final String id;

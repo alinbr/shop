@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shop/providers_riverpod/cartController.dart' hide CartItem;
-import 'package:shop/providers_riverpod/ordersController.dart';
+import 'package:shop/providers_riverpod/cart_controller.dart' hide CartItem;
+import 'package:shop/providers_riverpod/orders_controller.dart';
 import '../widgets/cart_item.dart' show CartItem;
 
 class CartScreen extends ConsumerWidget {

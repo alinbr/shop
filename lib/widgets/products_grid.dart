@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:shop/providers_riverpod/productsController.dart';
+import 'package:shop/providers_riverpod/products_controller.dart';
 
 import './product_item.dart';
 
@@ -35,12 +35,24 @@ class _ProductsGridState extends ConsumerState<ProductsGrid> {
         itemBuilder: (ctx, i) {
           if (i == 0)
             return Container(
-                child: Text(
-              "Find your \nnext purchase!",
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w500),
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Find your",
+                  style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w700),
+                ),
+                Text(
+                  "next style!",
+                  style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w400),
+                ),
+              ],
             ));
           if (i == 1)
             return Row(

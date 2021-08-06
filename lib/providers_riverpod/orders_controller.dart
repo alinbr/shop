@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:shop/providers_riverpod/authController.dart';
+import 'package:shop/providers_riverpod/auth_controller.dart';
 
-import 'cartController.dart';
+import 'cart_controller.dart';
 
 final ordersProvider = ChangeNotifierProvider((ref) => OrdersController(
       ref.watch(authProvider).token,
