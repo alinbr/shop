@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shop/providers/products.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/providers_riverpod/productsController.dart';
 import 'package:shop/screens/edit_product_screen.dart';
 
-import 'package:provider/provider.dart';
-
-class UserProduct extends StatelessWidget {
+class UserProduct extends ConsumerWidget {
   final String id;
   final String title;
   final String imageUrl;
@@ -12,7 +11,7 @@ class UserProduct extends StatelessWidget {
   UserProduct(this.title, this.imageUrl, this.id);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final scaffold = Scaffold.of(context);
 
     return ListTile(
@@ -37,8 +36,7 @@ class UserProduct extends StatelessWidget {
               icon: Icon(Icons.delete),
               onPressed: () async {
                 try {
-                  await Provider.of<Products>(context, listen: false)
-                      .deleteProduct(id);
+                  ref.watch(productsProvider).deleteProduct(id);
                 } catch (error) {
                   scaffold
                       .showSnackBar(SnackBar(content: Text('Deleting failed')));

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shop/providers/cart.dart' show Cart;
-import '../providers/orders.dart';
-import '../widgets/cart_item.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/providers_riverpod/cartController.dart' hide CartItem;
+import 'package:shop/providers_riverpod/ordersController.dart';
+import '../widgets/cart_item.dart' show CartItem;
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends ConsumerWidget {
   static const routeName = '/cart';
 
   @override
-  Widget build(BuildContext context) {
-    final cartData = Provider.of<Cart>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cartData = ref.watch(cartProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +46,7 @@ class CartScreen extends StatelessWidget {
                                 .color),
                       ),
                       backgroundColor: Colors.black87),
-                  OrderNowButton(cartData: cartData)
+                  OrderNowButton()
                 ],
               ),
             ),
@@ -73,39 +73,37 @@ class CartScreen extends StatelessWidget {
   }
 }
 
-class OrderNowButton extends StatefulWidget {
+class OrderNowButton extends ConsumerStatefulWidget {
   const OrderNowButton({
     Key key,
-    @required this.cartData,
   }) : super(key: key);
-
-  final Cart cartData;
 
   @override
   _OrderNowButtonState createState() => _OrderNowButtonState();
 }
 
-class _OrderNowButtonState extends State<OrderNowButton> {
+class _OrderNowButtonState extends ConsumerState<OrderNowButton> {
   var _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    final cartData = ref.watch(cartProvider);
+
     return TextButton(
       child: _isLoading
           ? CircularProgressIndicator()
           : Text(
               'Order now',
             ),
-      onPressed: (widget.cartData.totalAmount <= 0 || _isLoading)
+      onPressed: (cartData.totalAmount <= 0 || _isLoading)
           ? null
           : () async {
               setState(() {
                 _isLoading = true;
               });
-              await Provider.of<Orders>(context, listen: false).addOrder(
-                  widget.cartData.items.values.toList(),
-                  widget.cartData.totalAmount);
-              widget.cartData.clear();
+              ref.watch(ordersProvider).addOrder(
+                  cartData.items.values.toList(), cartData.totalAmount);
+              cartData.clear();
               setState(() {
                 _isLoading = false;
               });

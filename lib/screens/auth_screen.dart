@@ -1,10 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shop/models/http_exception.dart';
-import 'package:shop/providers/auth.dart';
+import 'package:shop/providers_riverpod/authController.dart';
 import 'package:shop/widgets/auth/confirm_password.dart';
 import 'package:shop/widgets/auth/email_field.dart';
 import 'package:shop/widgets/auth/login_register_button.dart';
@@ -13,11 +11,11 @@ import 'package:shop/widgets/auth/switch_auth_mode_text.dart';
 
 enum AuthMode { Signup, Login }
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends ConsumerWidget {
   static const routeName = '/auth';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -67,16 +65,14 @@ class AuthScreen extends StatelessWidget {
   }
 }
 
-class AuthCard extends StatefulWidget {
-  const AuthCard({
-    Key key,
-  }) : super(key: key);
+class AuthCard extends ConsumerStatefulWidget {
+  const AuthCard({Key key}) : super(key: key);
 
   @override
   _AuthCardState createState() => _AuthCardState();
 }
 
-class _AuthCardState extends State<AuthCard>
+class _AuthCardState extends ConsumerState<AuthCard>
     with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
@@ -133,11 +129,13 @@ class _AuthCardState extends State<AuthCard>
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false)
+        ref
+            .watch(authProvider)
             .signIn(_authData['email'], _authData['password']);
       } else {
         // Sign user up
-        await Provider.of<Auth>(context, listen: false)
+        ref
+            .watch(authProvider)
             .signUp(_authData['email'], _authData['password']);
       }
     } on HttpException catch (error) {

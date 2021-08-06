@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:provider/provider.dart';
+import 'package:shop/providers_riverpod/productsController.dart';
 
 import './product_item.dart';
-import '../providers/products.dart';
 
-class ProductsGrid extends StatefulWidget {
+class ProductsGrid extends ConsumerStatefulWidget {
   const ProductsGrid();
 
   @override
   _ProductsGridState createState() => _ProductsGridState();
 }
 
-class _ProductsGridState extends State<ProductsGrid> {
+class _ProductsGridState extends ConsumerState<ProductsGrid> {
   bool _showOnlyFav = false;
 
   @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<Products>(context);
+    final productsData = ref.watch(productsProvider);
 
     final products = _showOnlyFav ? productsData.favItems : productsData.items;
 
@@ -70,10 +70,7 @@ class _ProductsGridState extends State<ProductsGrid> {
                 ),
               ],
             );
-          return ChangeNotifierProvider.value(
-            value: products[i - 2],
-            child: ProductItem(),
-          );
+          return ProductItem(products[i - 2]);
         });
   }
 }

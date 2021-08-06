@@ -1,8 +1,17 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:shop/providers/cart.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop/providers_riverpod/authController.dart';
+
+import 'cartController.dart';
+
+final ordersProvider = ChangeNotifierProvider((ref) => OrdersController(
+      ref.watch(authProvider).token,
+      ref.watch(authProvider).userId,
+      [],
+    ));
 
 class OrderItem {
   final String id;
@@ -13,13 +22,13 @@ class OrderItem {
   OrderItem({this.id, this.amount, this.products, this.dateTime});
 }
 
-class Orders with ChangeNotifier {
+class OrdersController with ChangeNotifier {
   List<OrderItem> _orders = [];
 
   final String authToken;
   final String userId;
 
-  Orders(this.authToken, this.userId, this._orders);
+  OrdersController(this.authToken, this.userId, this._orders);
 
   List<OrderItem> get orders {
     return [..._orders];

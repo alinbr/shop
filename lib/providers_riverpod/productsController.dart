@@ -1,16 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:shop/models/http_exception.dart';
-import 'product.dart';
 import 'dart:convert';
 
-class Products with ChangeNotifier {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
+import 'package:shop/models/http_exception.dart';
+import 'package:shop/providers_riverpod/authController.dart';
+import 'package:shop/providers_riverpod/productController.dart';
+
+final productsProvider = ChangeNotifierProvider((ref) {
+  return ProductsController(
+      ref.watch(authProvider).token, ref.watch(authProvider).userId, []);
+});
+
+class ProductsController with ChangeNotifier {
   List<Product> _items = [];
 
   final String authToken;
   final String userId;
 
-  Products(this.authToken, this.userId, this._items);
+  ProductsController(this.authToken, this.userId, this._items);
 
   List<Product> get items {
     return [..._items];

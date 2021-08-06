@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/providers_riverpod/productsController.dart';
 import 'package:shop/widgets/user_product.dart';
 
-import '../providers/products.dart';
 import '../widgets/app_drawer.dart';
 import './edit_product_screen.dart';
 
-class UserProductsScreen extends StatelessWidget {
+class UserProductsScreen extends ConsumerWidget {
   static const routeName = '/user-products';
 
-  Future<void> _refreshProducts(BuildContext context) async {
-    await Provider.of<Products>(context, listen: false)
-        .fetchAndSetProducts(true);
+  Future<void> _refreshProducts(BuildContext context, WidgetRef ref) async {
+    await ref.read(productsProvider).fetchAndSetProducts(true);
   }
 
   @override
-  Widget build(BuildContext context) {
-    // final productsData = Provider.of<Products>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
     print('rebuilding...');
     return Scaffold(
       appBar: AppBar(
@@ -35,29 +33,25 @@ class UserProductsScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: FutureBuilder(
-        future: _refreshProducts(context),
+        future: _refreshProducts(context, ref),
         builder: (ctx, snapshot) =>
             snapshot.connectionState == ConnectionState.waiting
-                ? Center(
-                    child: Text(snapshot.connectionState.toString()),
-                  )
+                ? Center(child: CircularProgressIndicator())
                 : RefreshIndicator(
-                    onRefresh: () => _refreshProducts(context),
-                    child: Consumer<Products>(
-                      builder: (ctx, productsData, _) => Padding(
-                        padding: EdgeInsets.all(8),
-                        child: ListView.builder(
-                          itemCount: productsData.items.length,
-                          itemBuilder: (_, i) => Column(
-                            children: [
-                              UserProduct(
-                                productsData.items[i].title,
-                                productsData.items[i].imageUrl,
-                                productsData.items[i].id,
-                              ),
-                              Divider(),
-                            ],
-                          ),
+                    onRefresh: () => _refreshProducts(context, ref),
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: ListView.builder(
+                        itemCount: ref.watch(productsProvider).items.length,
+                        itemBuilder: (_, i) => Column(
+                          children: [
+                            UserProduct(
+                              ref.watch(productsProvider).items[i].title,
+                              ref.watch(productsProvider).items[i].imageUrl,
+                              ref.watch(productsProvider).items[i].id,
+                            ),
+                            Divider(),
+                          ],
                         ),
                       ),
                     ),

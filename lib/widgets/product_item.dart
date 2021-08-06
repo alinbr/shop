@@ -1,20 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shop/providers/auth.dart';
-import 'package:shop/providers/cart.dart';
-import 'package:shop/providers/product.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/providers_riverpod/authController.dart';
+import 'package:shop/providers_riverpod/cartController.dart';
+import 'package:shop/providers_riverpod/productController.dart';
 
 import '../screens/product_detail_screen.dart';
 
-class ProductItem extends StatelessWidget {
+class ProductItem extends ConsumerWidget {
+  final Product product;
+
+  ProductItem(this.product);
+
   @override
-  Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context, listen: false);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productController = ref.watch(productProvider(product));
 
-    final cart = Provider.of<Cart>(context, listen: false);
+    final cart = ref.watch(cartProvider);
 
-    final authData = Provider.of<Auth>(context, listen: false);
+    final authData = ref.watch(authProvider);
 
     return Container(
       child: Column(
@@ -56,15 +60,13 @@ class ProductItem extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: IconButton(
-                      icon: Consumer<Product>(
-                        builder: (ctx, product, _) => Icon(
-                          product.isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                        ),
+                      icon: Icon(
+                        product.isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border,
                       ),
                       onPressed: () {
-                        product.toogleFavoriteStatus(
+                        productController.toogleFavoriteStatus(
                             authData.token, authData.userId);
                       },
                       color: !product.isFavorite

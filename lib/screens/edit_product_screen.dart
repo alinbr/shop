@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shop/providers/products.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/providers_riverpod/productController.dart';
+import 'package:shop/providers_riverpod/productsController.dart';
 
-import '../providers/product.dart';
-
-class EditProductScreen extends StatefulWidget {
+class EditProductScreen extends ConsumerStatefulWidget {
   static const routeName = '/edit-product';
 
   @override
   _EditProductScreenState createState() => _EditProductScreenState();
 }
 
-class _EditProductScreenState extends State<EditProductScreen> {
+class _EditProductScreenState extends ConsumerState<EditProductScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
@@ -44,8 +43,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (isInit) {
       final productId = ModalRoute.of(context).settings.arguments as String;
       if (productId != null) {
-        _editedProduct =
-            Provider.of<Products>(context, listen: false).findById(productId);
+        _editedProduct = ref.watch(productsProvider).findById(productId);
         _initValues = {
           'title': _editedProduct.title,
           'description': _editedProduct.description,
@@ -90,12 +88,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
     });
     _form.currentState.save();
     if (_editedProduct.id != null) {
-      await Provider.of<Products>(context, listen: false)
+      await ref
+          .watch(productsProvider)
           .updateProduct(_editedProduct.id, _editedProduct);
     } else {
       try {
-        await Provider.of<Products>(context, listen: false)
-            .addProduct(_editedProduct);
+        await ref.watch(productsProvider).addProduct(_editedProduct);
       } catch (error) {
         await showDialog(
             context: context,
@@ -104,7 +102,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 title: Text('An error occured'),
                 content: Text(error.toString()),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                       onPressed: () {
                         Navigator.of(ctx).pop();
                       },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shop/providers/cart.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/providers_riverpod/cartController.dart';
 
-class CartItem extends StatelessWidget {
+class CartItem extends ConsumerWidget {
   final String id;
   final String productId;
   final double price;
@@ -14,7 +14,7 @@ class CartItem extends StatelessWidget {
       this.imageUrl);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Dismissible(
       confirmDismiss: (_) {
         return showDialog(
@@ -23,12 +23,12 @@ class CartItem extends StatelessWidget {
             title: Text('Are you sure?'),
             content: Text('Do you want to remove?'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(false);
                   },
                   child: Text('No')),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
@@ -39,7 +39,7 @@ class CartItem extends StatelessWidget {
       },
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
-        Provider.of<Cart>(context, listen: false).removeItem(productId);
+        ref.watch(cartProvider).removeItem(productId);
       },
       key: ValueKey(id),
       background: Container(

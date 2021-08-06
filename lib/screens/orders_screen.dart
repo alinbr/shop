@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/providers_riverpod/ordersController.dart' hide OrderItem;
+import 'package:shop/widgets/order_item.dart';
 import '../widgets/app_drawer.dart';
 
-import '../providers/orders.dart' show Orders;
-
-import '../widgets/order_item.dart';
-
-class OrdersScreen extends StatelessWidget {
+class OrdersScreen extends ConsumerWidget {
   static const routeName = '/orders';
 
   @override
-  Widget build(BuildContext context) {
-    // final orderData = Provider.of<Orders>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -21,8 +18,7 @@ class OrdersScreen extends StatelessWidget {
         ),
         drawer: AppDrawer(),
         body: FutureBuilder(
-          future:
-              Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
+          future: ref.read(ordersProvider).fetchAndSetOrders(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -34,11 +30,10 @@ class OrdersScreen extends StatelessWidget {
                   child: Text('Some error'),
                 );
               } else {
-                return Consumer<Orders>(
-                    builder: (context, orderData, child) => ListView.builder(
-                        itemBuilder: (ctx, index) =>
-                            OrderItem(orderData.orders[index]),
-                        itemCount: orderData.orders.length));
+                return ListView.builder(
+                    itemBuilder: (ctx, index) =>
+                        OrderItem(ref.watch(ordersProvider).orders[index]),
+                    itemCount: ref.watch(ordersProvider).orders.length);
               }
             }
           },

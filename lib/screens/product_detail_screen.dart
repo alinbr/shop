@@ -1,17 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shop/providers_riverpod/productsController.dart';
 
-import '../providers/products.dart';
-
-class ProductDetailScren extends StatelessWidget {
+class ProductDetailScren extends ConsumerWidget {
   static const routeName = '/product-detail';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final productId = ModalRoute.of(context).settings.arguments as String;
-    final product =
-        Provider.of<Products>(context, listen: false).findById(productId);
+    final product = ref.watch(productsProvider).findById(productId);
 
     return Scaffold(
       body: CustomScrollView(

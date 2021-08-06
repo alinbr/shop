@@ -1,4 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final cartProvider = ChangeNotifierProvider((ref) => CartController());
 
 class CartItem {
   final String id;
@@ -10,7 +13,7 @@ class CartItem {
   CartItem({this.id, this.title, this.quantity, this.price, this.imageUrl});
 }
 
-class Cart with ChangeNotifier {
+class CartController with ChangeNotifier {
   Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {

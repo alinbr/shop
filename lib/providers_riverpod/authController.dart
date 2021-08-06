@@ -1,12 +1,15 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'package:shop/models/http_exception.dart';
 import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class Auth with ChangeNotifier {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shop/models/http_exception.dart';
+
+final authProvider = ChangeNotifierProvider((ref) => AuthController());
+
+class AuthController with ChangeNotifier {
   String _token;
   DateTime _expiryDate;
   String _userId;
