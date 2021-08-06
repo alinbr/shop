@@ -5,6 +5,8 @@ This is a Flutter up based on Maximilian Schwarzmüller's course on Udemy I did 
 Recently I revisited it and did some UI changes
 as well as switching from Provider to Riverpod.
 
+Users can create accounts using Firebase Email/Password auth, add products & make orders saved in Firebase Realtime DB.
+
 
 Old app:
 
